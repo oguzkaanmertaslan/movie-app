@@ -18,13 +18,29 @@ const App = () => {
     getMovieRequest(searchValue, setMovie);
   }, [searchValue]);
 
+  useEffect(() => {
+    const movieFavorites = localStorage.getItem("favorites");
+    if (movieFavorites) {
+      setFavorites(JSON.parse(movieFavorites));
+    }
+  }, []);
+
+  const saveToLocalStorage = (items) => {
+    localStorage.setItem("favorites", JSON.stringify(items));
+  };
+
   const addFavoriteMovie = (movie) => {
     const newFavoriteList = [...favorites, movie];
     setFavorites(newFavoriteList);
+    saveToLocalStorage(newFavoriteList);
   };
+
   const removeFavoritesMovie = (movie) => {
-    const newFavoriteList = favorites.filter((fav) => fav.imdbID !== movie.imdbID);
+    const newFavoriteList = favorites.filter(
+      (fav) => fav.imdbID !== movie.imdbID
+    );
     setFavorites(newFavoriteList);
+    saveToLocalStorage(newFavoriteList);
   };
 
   return (
@@ -33,7 +49,7 @@ const App = () => {
         <MovieListHeading heading="Movies" />
         <SearchBox searchValue={searchValue} setSearchValue={setSearchValue} />
       </div>
-      <div className="row">
+      <div className="row" >
         <MovieList
           movies={movie}
           handleFavoritesClick={addFavoriteMovie}
@@ -43,7 +59,7 @@ const App = () => {
       <div className="row d-flex align-items-center mt-4 mb-4">
         <MovieListHeading heading="Favorites" />
       </div>
-      <div className="row">
+      <div className="row" >
         <MovieList
           movies={favorites}
           handleFavoritesClick={removeFavoritesMovie}
