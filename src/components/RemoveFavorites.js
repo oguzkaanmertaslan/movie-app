@@ -3,7 +3,7 @@ import React from "react";
 const RemoveFavorites = () => {
   return (
     <>
-      <span className="mr-2">Remove from favorites</span>
+      <span className="mr-2 favorites">Remove from favorites</span>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="16"

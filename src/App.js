@@ -31,8 +31,15 @@ const App = () => {
 
   const addFavoriteMovie = (movie) => {
     const newFavoriteList = [...favorites, movie];
-    setFavorites(newFavoriteList);
-    saveToLocalStorage(newFavoriteList);
+    const uniqueFavorites=favorites.filter((item)=>item.imdbID!==movie.imdbID)
+    if (uniqueFavorites.length === favorites.length) {
+      setFavorites(newFavoriteList);
+      saveToLocalStorage(newFavoriteList);
+    }
+    else{
+      alert("Movie already exists in favorites")
+    }
+    
   };
 
   const removeFavoritesMovie = (movie) => {
@@ -45,7 +52,7 @@ const App = () => {
 
   return (
     <div className="container-fluid movie-app">
-      <div className="row d-flex align-items-center mt-4 mb-4">
+      <div className="row d-flex align-items-center mt-4 mb-4 ">
         <MovieListHeading heading="Movies" />
         <SearchBox searchValue={searchValue} setSearchValue={setSearchValue} />
       </div>
